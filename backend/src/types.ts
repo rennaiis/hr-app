@@ -1,12 +1,14 @@
-
-interface Employee{
+export interface Employee{
    id: number;
-   birthDate: string;
+   name: string;
+   birthDate: Date;
    passportData: string;
    contact: string;
    adress: string;
    job: string;
    department: string;
    salary: number;
-   hireDate: string;
+   hireDate: Date;
+   isFired: boolean;
 }
+

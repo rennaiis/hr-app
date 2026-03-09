@@ -14,6 +14,7 @@ async function initDb() {
         db.run(`
             CREATE TABLE IF NOT EXISTS Employees(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
                 birth_date TEXT,
                 passport_data TEXT,
                 contact TEXT,
@@ -21,7 +22,8 @@ async function initDb() {
                 job TEXT,
                 department TEXT,
                 salary INTEGER,
-                hire_date TEXT
+                hire_date TEXT, 
+                is_fired BOOLEAN
             );
         `)
     }catch(err){
