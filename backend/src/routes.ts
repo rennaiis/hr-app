@@ -3,7 +3,7 @@ import {db} from './db'
 import departments from "./data/departments.json"
 import jobs from "./data/jobs.json"
 import { Employee } from "./types";
-const router = Router()
+export const router = Router()
 
 router.get("/", async(req, res)=>{
     const Employees = await db.all(`SELECT * FROM Employees`)

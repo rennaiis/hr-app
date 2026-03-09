@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import { open, Database } from "sqlite";
 
-const PATH = './db.db'
+const PATH = './data/db.db'
 
 let db: Database<sqlite3.Database, sqlite3.Statement>;
 async function initDb() {
