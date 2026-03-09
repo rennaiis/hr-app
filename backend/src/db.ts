@@ -12,15 +12,15 @@ async function initDb() {
             driver: sqlite3.Database
         })
         db.run(`
-            CREATE TABLE IF NOT EXISTS employees(
-                id INTEGER PRIMARY KEY AUTOINCREMENT
-                birth_date TEXT
-                passport_data TEXT
-                contact TEXT
-                adress TEXT 
-                job TEXT 
-                department TEXT 
-                salary INTEGER 
+            CREATE TABLE IF NOT EXISTS Employees(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                birth_date TEXT,
+                passport_data TEXT,
+                contact TEXT,
+                adress TEXT,
+                job TEXT,
+                department TEXT,
+                salary INTEGER,
                 hire_date TEXT
             );
         `)
