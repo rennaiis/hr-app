@@ -3,7 +3,7 @@
   import departments from './data/departments.json'
   import jobs from './data/jobs.json'
   import { type Employee } from "../../types/Employee";
-  const employees: Employee[] = []
+  const employees = ref<Employee[]>([])
   const name = ref('')
   const birth_date = ref(new Date())
   const passport_data = ref('')

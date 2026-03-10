@@ -43,7 +43,7 @@ const employees: Employee[] = [
   }
 ]
 
-export async function seed() {
+export async function seedDb() {
     for (let emp of employees){
         await db.run(
         `INSERT INTO Employees
