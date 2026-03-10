@@ -1,9 +1,13 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import departments from './data/departments.json'
   import jobs from './data/jobs.json'
   import { type Employee } from "../../types/Employee";
+  import { getEmployees } from './API/eployees';
   const employees = ref<Employee[]>([])
+  onMounted( async()=>{
+    employees.value = await getEmployees()
+  })
   const name = ref('')
   const birth_date = ref(new Date())
   const passport_data = ref('')
