@@ -68,7 +68,27 @@
           type="text" 
           id="adress">
       </p>
-      
+      <p>
+        <label for="department">Отдел</label>
+        <select 
+          id="department"
+          v-model="departmentChosen">
+          <option v-for="department in departments" :key="department" :value="department">
+            {{ department }}
+          </option>
+        </select>
+      </p>
+      <p>
+        <label for="job">Профессия</label>
+        <select 
+          id="job"
+          v-model="jobChosen"
+        >
+        <option v-for="job in jobs" :key="job" :value="job">
+          {{ job }}
+        </option>
+      </select>
+      </p>
       <p>
         <label for="salary">Зарплата</label>
         <input 
