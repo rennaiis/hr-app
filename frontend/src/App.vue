@@ -2,6 +2,8 @@
   import { ref } from 'vue';
   import departments from './data/departments.json'
   import jobs from './data/jobs.json'
+  import { type Employee } from "../../types/Employee";
+  const employees: Employee[] = []
   const name = ref('')
   const birth_date = ref(new Date())
   const passport_data = ref('')
@@ -103,7 +105,40 @@
           type="date" 
           id="hire_date">
       </p>
+      <button>Добавить</button>
     </form>
+    <table>
+      <thead>
+    <tr>
+      <th>ФИО</th>
+      <th>Дата рождения</th>
+      <th>Паспорт</th>
+      <th>Телефон</th>
+      <th>Адрес</th>
+      <th>Отдел</th>
+      <th>Должность</th>
+      <th>Зарплата</th>
+      <th>Дата приема</th>
+    </tr>
+    <tbody>
+    <tr v-for="employee in employees" :key="employee.id">
+      <td>{{ employee.name }}</td>
+      <td>{{ employee.birthDate }}</td>
+      <td>{{ employee.passportData }}</td>
+      <td>{{ employee.contact }}</td>
+      <td>{{ employee.adress }}</td>
+      <td>{{ employee.department }}</td>
+      <td>{{ employee.job }}</td>
+      <td>{{ employee.salary }}</td>
+      <td>{{ employee.hireDate }}</td>
+      <td>
+        <button>Редактировать</button>
+        <button>Уволить</button>
+      </td>
+    </tr>
+    </tbody>
+  </thead>
+    </table>
   </div>
 </template>
 
