@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 import { open, Database } from "sqlite";
-
+import { seed } from "./seed"; 
 const PATH = './data/db.db'
 
 let db: Database<sqlite3.Database, sqlite3.Statement>;
@@ -26,6 +26,7 @@ async function initDb() {
                 is_fired BOOLEAN
             );
         `)
+        await seed()
     }catch(err){
         console.log("Ошибка создания бд");
         process.exit(1)
