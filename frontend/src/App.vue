@@ -113,35 +113,36 @@
     </form>
     <table>
       <thead>
-    <tr>
-      <th>ФИО</th>
-      <th>Дата рождения</th>
-      <th>Паспорт</th>
-      <th>Телефон</th>
-      <th>Адрес</th>
-      <th>Отдел</th>
-      <th>Должность</th>
-      <th>Зарплата</th>
-      <th>Дата приема</th>
-    </tr>
+        <tr>
+          <th>ФИО</th>
+          <th>Дата рождения</th>
+          <th>Паспорт</th>
+          <th>Телефон</th>
+          <th>Адрес</th>
+          <th>Отдел</th>
+          <th>Должность</th>
+          <th>Зарплата</th>
+          <th>Дата приема</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
     <tbody>
-    <tr v-for="employee in employees" :key="employee.id">
-      <td>{{ employee.name }}</td>
-      <td>{{ employee.birthDate }}</td>
-      <td>{{ employee.passportData }}</td>
-      <td>{{ employee.contact }}</td>
-      <td>{{ employee.adress }}</td>
-      <td>{{ employee.department }}</td>
-      <td>{{ employee.job }}</td>
-      <td>{{ employee.salary }}</td>
-      <td>{{ employee.hireDate }}</td>
-      <td>
-        <button>Редактировать</button>
-        <button>Уволить</button>
-      </td>
-    </tr>
+      <tr v-for="employee in employees" :key="employee.id">
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.birthDate }}</td>
+        <td>{{ employee.passportData }}</td>
+        <td>{{ employee.contact }}</td>
+        <td>{{ employee.adress }}</td>
+        <td>{{ employee.department }}</td>
+        <td>{{ employee.job }}</td>
+        <td>{{ employee.salary }}</td>
+        <td>{{ employee.hireDate }}</td>
+        <td>
+          <button>Редактировать</button>
+          <button>Уволить</button>
+        </td>
+      </tr>
     </tbody>
-  </thead>
     </table>
   </div>
 </template>
