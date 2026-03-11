@@ -44,22 +44,29 @@ const employees: Employee[] = [
 ]
 
 export async function seedDb() {
-    for (let emp of employees){
-        await db.run(
-        `INSERT INTO Employees
-        (name, birth_date, passport_data, contact, adress, job, department, salary, hire_date, is_fired)
-        VALUES (?,?,?,?,?,?,?,?,?,?)`,
-        [String(emp.birthDate ?  new Date(emp.birthDate).toISOString() : null), 
-            emp.name, 
-            emp.passportData,
-            emp.contact, 
-            emp.adress, 
-            emp.job, 
-            emp.department, 
-            emp.salary,
-            String(emp.hireDate ?  new Date(emp.hireDate).toISOString() : null),
-            emp.isFired]
+    await db.run(`DELETE FROM Employees`)
+    const res = await db.get(
+      `SELECT COUNT(*) as count FROM Employees`
     )
-    }
+    if (res.count === 0){
+          for (let emp of employees){
+            await db.run(
+            `INSERT INTO Employees
+            (id, name, birth_date, passport_data, contact, adress, job, department, salary, hire_date, is_fired)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
+            [   emp.id,  
+                emp.name, 
+                String(emp.birthDate ?  new Date(emp.birthDate).toISOString() : null),
+                emp.passportData,
+                emp.contact, 
+                emp.adress, 
+                emp.job, 
+                emp.department, 
+                emp.salary,
+                String(emp.hireDate ?  new Date(emp.hireDate).toISOString() : null),
+                emp.isFired]
+        )
+      }
+    }   
     
 }

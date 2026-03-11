@@ -129,14 +129,14 @@
     <tbody>
       <tr v-for="employee in employees" :key="employee.id">
         <td>{{ employee.name }}</td>
-        <td>{{ employee.birthDate }}</td>
+        <td>{{ employee.birthDate.toDateString()}}</td>
         <td>{{ employee.passportData }}</td>
         <td>{{ employee.contact }}</td>
         <td>{{ employee.adress }}</td>
         <td>{{ employee.department }}</td>
         <td>{{ employee.job }}</td>
         <td>{{ employee.salary }}</td>
-        <td>{{ employee.hireDate }}</td>
+        <td>{{ employee.hireDate.toDateString()}}</td>
         <td>
           <button>Редактировать</button>
           <button>Уволить</button>
