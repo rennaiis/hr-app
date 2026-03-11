@@ -11,9 +11,10 @@ interface EmployeeDb {
   hire_date: string
   is_fired: boolean
 }
+import { type Employee } from "../../../types/Employee"
 
 export async function getEmployees() {
-    const res = await fetch('http://localhost:3000')
+    const res = await fetch('http://localhost:3000/')
     const data: EmployeeDb[] = await res.json()
     const emps = data.map(emp => ({
         id: emp.id,
@@ -29,4 +30,15 @@ export async function getEmployees() {
         isFired: emp.is_fired
     }))
     return emps
+}
+
+export async function addEmployee(emp: Employee){
+    const res =  await fetch('http://localhost:3000/', {
+        method: 'POST', 
+        headers: {
+            "Content-Type": 'application/json'
+        }, 
+        body: JSON.stringify(emp)
+    })
+    return await res.json
 }
