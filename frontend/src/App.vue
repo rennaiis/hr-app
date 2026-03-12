@@ -83,31 +83,34 @@
       <h1>Сотрудники</h1>
     </div>
     <div class="main">
-      <div class='search-group'>
-      <label for="search"><img class="icon" src="/icon-search.svg" alt="search" viewBox="0 0 24 24"/></label>
-        <input class="search-input" @change="" type="text" v-model="searchParams.search" id="search">
-        <p class="select-filter">
-          <select class="filter"
-            v-model="searchParams.filterDepartment">
-            <option value="">Все отделы</option>
-            <option v-for="department in departments" :key="department" :value="department">
-              {{ department }}
-            </option>
-          </select>
-        </p>
-        <p class="select-filter">
-          <select class="filter"
-            v-model="searchParams.filterJob">
-            <option value="">Все профессии</option>
-            <option v-for="job in jobs" :key="job" :value="job">
-              {{ job }}
-            </option>
-          </select>
-        </p>
-      <button @click="openAddForm">+</button>
-    </div>
-    </div>
-    <form @submit ="submitAdd" v-if="isAddFormOpen">
+      <div class="inline">
+        <div class='block search-block'>
+          <label for="search"><img class="icon" src="/icon-search.svg" alt="search" viewBox="0 0 24 24"/></label>
+            <input class="search-input" @change="" type="text" v-model="searchParams.search" id="search">
+            <p class="select-filter">
+              <select class="filter"
+                v-model="searchParams.filterDepartment">
+                <option value="">Все отделы</option>
+                <option v-for="department in departments" :key="department" :value="department">
+                  {{ department }}
+                </option>
+              </select>
+            </p>
+            <p class="select-filter">
+              <select class="filter"
+                v-model="searchParams.filterJob">
+                <option value="">Все профессии</option>
+                <option v-for="job in jobs" :key="job" :value="job">
+                  {{ job }}
+                </option>
+              </select>
+          </p>
+        </div>
+        <button @click="openAddForm" v-if="!isAddFormOpen">Добавить</button>
+        <button @click="openAddForm"  v-if="isAddFormOpen">Скрыть</button>
+      </div>
+    
+    <form @submit ="submitAdd" v-if="isAddFormOpen" class="block form-block">
       <h3>Новый сотрудник</h3>
       <p>
         <label for="name">ФИО</label>
@@ -220,6 +223,7 @@
       </tr>
     </tbody>
     </table>
+  </div>
   </div>
   <EditWindow 
     :visible="isEditOpen"

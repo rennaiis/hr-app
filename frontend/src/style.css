@@ -2,9 +2,11 @@
 
 :root{
     --header-back: #5964e0;
+    --button-hover: #191e50;
     --background: #f5f6ff;
     --letters-dark: #1e1e1f;
     --letters-light: #f2f2ff;
+    --shadow: rgba(12, 5, 109, 0.05);
 }
 html{
    font-size: 62.5%;
@@ -23,7 +25,7 @@ h1 {
     font-size: clamp(2rem, 4vw, 4rem);
 }
 h3{
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
 }
 .header{
     justify-items: center;
@@ -31,27 +33,47 @@ h3{
     color: var(--letters-light);
     width: 100%; 
     padding: 1%;
-    box-shadow: 0 2px 10px rgba(69, 70, 94, 0.5);
+    box-shadow: 0 2px 10px var(--shadow);
 }
-
-.search-group {
+.inline{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+button{
+    background-color: var(--header-back);
+    color: var(--letters-light);
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+}
+button:hover{
+    background-color: var(--button-hover);
+}
+.block {
   display: flex;
   align-items: center;
   background: #fff;
   border-radius: 8px;
   padding: 8px 16px;
   box-shadow: 0 2px 10px rgba(12, 5, 109, 0.05);
-  max-width: 800px;
+  width: 100%;
+}
+
+.form-block{
+    flex-direction: column;
+    align-items:start;
 }
 .search-input, .select-filter {
   display: flex;
   align-items: center;
   flex: 1;
 }
-.search-input, .select-filter:not(:last-child) {
-  border-right: 1px solid #afafaf;
-  margin-right: 10px;
-  padding-right: 10px;
+
+.select-filter {
+  border-left: 1px solid #afafaf;
+  margin-left: 10px;
+  padding-left: 10px;
 }
 .icon {
   width: 20px;
@@ -84,4 +106,5 @@ input::placeholder {
     display: flex;
     flex-direction: column;
     padding: 2rem;    
+    gap: 20px
 }
