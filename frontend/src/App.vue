@@ -82,34 +82,30 @@
     <div class="header">
       <h1>Сотрудники</h1>
     </div>
-    <div>
-      <form >
-        <input @change="" type="text" v-model="searchParams.search" id="search">
-        <label for="search"><img src="" alt=""></label>
-        <p>
-        <label for="departmentFilter">Отдел</label>
-        <select 
-          id="departmentFilter"
-          v-model="searchParams.filterDepartment">
-          <option v-for="department in departments" :key="department" :value="department">
-            {{ department }}
-          </option>
-        </select>
-      </p>
-      <p>
-        <label for="jobFilter">Профессия</label>
-        <select 
-          v-model="searchParams.filterJob"
-          id="jobFilter"
-        >
-        <option v-for="job in jobs" :key="job" :value="job">
-          {{ job }}
-        </option>
-      </select>
-      </p>
-      </form>
+    <div class="main">
+      <div class='search-group'>
+      <label for="search"><img class="icon" src="/icon-search.svg" alt="search" viewBox="0 0 24 24"/></label>
+        <input class="search-input" @change="" type="text" v-model="searchParams.search" id="search">
+        <p class="select-filter">
+          <select class="filter"
+            v-model="searchParams.filterDepartment">
+            <option value="">Все отделы</option>
+            <option v-for="department in departments" :key="department" :value="department">
+              {{ department }}
+            </option>
+          </select>
+        </p>
+        <p class="select-filter">
+          <select class="filter"
+            v-model="searchParams.filterJob">
+            <option value="">Все профессии</option>
+            <option v-for="job in jobs" :key="job" :value="job">
+              {{ job }}
+            </option>
+          </select>
+        </p>
       <button @click="openAddForm">+</button>
-
+    </div>
     </div>
     <form @submit ="submitAdd" v-if="isAddFormOpen">
       <h3>Новый сотрудник</h3>
