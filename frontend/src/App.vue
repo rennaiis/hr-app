@@ -45,7 +45,7 @@
       department: '', 
       salary: 0, 
       hireDate: new Date(), 
-      isFired: false
+      isFired: false,
     })
     const selectedEmployee = ref<Employee | null>(null)
     const isEditOpen = ref(false)

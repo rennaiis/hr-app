@@ -10,5 +10,6 @@ export interface Employee{
    salary: number;
    hireDate: Date;
    isFired: boolean;
+   
 }
 

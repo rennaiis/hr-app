@@ -12,15 +12,15 @@ router.get("/", async(req: Request<{}, {}, {}, productQuery>, res)=>{
     let sql = `SELECT * FROM Employees`
     let Employees = await db.all(`SELECT * FROM Employees`)
     if (req.query.search){
-        const search = String(req.query.search)
+        const search = String(req.query.search).toLowerCase()
         Employees = Employees.filter(emp => emp.name.toLowerCase().includes(search))
     }
     if (req.query.job){
-        const job = String(req.query.job)
+        const job = String(req.query.job).toLowerCase()
         Employees = Employees.filter(emp => emp.job.toLowerCase() == job)
     }
     if (req.query.department){
-        const department = String(req.query.department)
+        const department = String(req.query.department).toLowerCase()
         Employees = Employees.filter(emp => emp.department.toLowerCase() == department)
     }
     res.json(Employees)
