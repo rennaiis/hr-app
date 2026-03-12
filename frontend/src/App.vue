@@ -4,7 +4,7 @@
     import jobs from './data/jobs.json'
     import { type Employee } from "../../types/Employee";
     import {type SearchParams} from "../../types/SearchParams"
-    import { getEmployees, addEmployee, updateEmployee} from './API/eployees';
+    import { getEmployees, addEmployee, updateEmployee, deleteEmployee} from './API/eployees';
     import EditWindow from './EditWindow.vue';
     const employees = ref<Employee[]>([])
     
@@ -14,6 +14,12 @@
       }
       employees.value = await getEmployees(searchParams.value)
       isEditOpen.value = false
+    }
+    async function deleteFromTable(emp: Employee) {
+      if (emp){
+        await deleteEmployee(emp)
+      }
+      refresh()
     }
     async function fireEmployee(emp: Employee) {
       emp.isFired = true
@@ -195,40 +201,43 @@
       </p>
       <button type="submit">Добавить</button>
     </form>
-    <table v-if="isTableEmpty">
-      <thead>
-        <tr>
-          <th>ФИО</th>
-          <th>Дата рождения</th>
-          <th>Паспорт</th>
-          <th>Телефон</th>
-          <th>Адрес</th>
-          <th>Отдел</th>
-          <th>Должность</th>
-          <th>Зарплата</th>
-          <th>Дата приема</th>
-          <th>Действия</th>
+    <div class="table-block">
+      <table v-if="isTableEmpty">
+        <thead>
+          <tr>
+            <th>ФИО</th>
+            <th>Дата рождения</th>
+            <th>Паспорт</th>
+            <th>Телефон</th>
+            <th>Адрес</th>
+            <th>Отдел</th>
+            <th>Должность</th>
+            <th>Зарплата</th>
+            <th>Дата приема</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr v-for="employee in employees" :key="employee.id">
+          <td>{{ employee.name }}</td>
+          <td>{{employee.birthDate.toISOString().split('T')[0]}}</td>
+          <td>{{ employee.passportData }}</td>
+          <td>{{ employee.contact }}</td>
+          <td>{{ employee.adress }}</td>
+          <td>{{ employee.department }}</td>
+          <td>{{ employee.job }}</td>
+          <td>{{ employee.salary }}</td>
+          <td>{{ employee.birthDate.toISOString().split('T')[0]}}</td>
+          <td class="table-buttons">
+            <button v-if="!employee.isFired" @click="selectEmployee(employee)">Изменить</button>
+            <button v-if="!employee.isFired" @click="fireEmployee(employee)">Уволить</button>
+            <button v-if="!employee.isFired" @click="deleteFromTable(employee)">Удалить</button>
+            <button v-if="employee.isFired" @click="unfireEmployee(employee)">Сотрудник уволен. Вернуть?</button>
+          </td>
         </tr>
-      </thead>
-    <tbody>
-      <tr v-for="employee in employees" :key="employee.id">
-        <td>{{ employee.name }}</td>
-        <td>{{employee.birthDate.toISOString().split('T')[0]}}</td>
-        <td>{{ employee.passportData }}</td>
-        <td>{{ employee.contact }}</td>
-        <td>{{ employee.adress }}</td>
-        <td>{{ employee.department }}</td>
-        <td>{{ employee.job }}</td>
-        <td>{{ employee.salary }}</td>
-        <td>{{ employee.birthDate.toISOString().split('T')[0]}}</td>
-        <td>
-          <button v-if="!employee.isFired" @click="selectEmployee(employee)">Изменить</button>
-          <button v-if="!employee.isFired" @click="fireEmployee(employee)">Уволить</button>
-          <button v-if="employee.isFired" @click="unfireEmployee(employee)">Сотрудник уволен. Вернуть?</button>
-        </td>
-      </tr>
-    </tbody>
-    </table>
+      </tbody>
+      </table>
+    </div>
   </div>
   </div>
   <EditWindow 

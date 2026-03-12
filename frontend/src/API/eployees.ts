@@ -69,3 +69,14 @@ export async function updateEmployee(emp: Employee) {
     }) 
     return await res.json()    
 }
+
+export async function deleteEmployee(emp: Employee) {
+    const res = await fetch(`http://localhost:3000/${emp.id}`,{
+        method: 'DELETE',
+        headers:{
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(emp)
+    })
+    return await res.json()
+}
