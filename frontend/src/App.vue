@@ -79,7 +79,9 @@
 
 <template>
   <div>
-    <h1>Сотрудники</h1>
+    <div class="header">
+      <h1>Сотрудники</h1>
+    </div>
     <div>
       <form >
         <input @change="" type="text" v-model="searchParams.search" id="search">
