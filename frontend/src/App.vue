@@ -4,6 +4,7 @@
   import jobs from './data/jobs.json'
   import { type Employee } from "../../types/Employee";
   import { getEmployees, addEmployee} from './API/eployees';
+  import EditWindow from './EditWindow.vue';
   const employees = ref<Employee[]>([])
   onMounted( async()=>{
     employees.value = await getEmployees()
@@ -11,6 +12,10 @@
   async function submitAdd() {
     await addEmployee(newEmployee.value)
     employees.value = await getEmployees()
+  }
+  function selectEmployee(emp: Employee){
+    isEditOpen.value = true
+    selectedEmployee.value = emp
   }
   const newEmployee = ref<Employee>({
     id: 0,
@@ -25,6 +30,8 @@
     hireDate: new Date(), 
     isFired: false
   })
+  const selectedEmployee = ref<Employee | null>(null)
+  const isEditOpen = ref(false)
 </script>
 
 <template>
@@ -145,13 +152,16 @@
         <td>{{ employee.salary }}</td>
         <td>{{ employee.hireDate.toDateString()}}</td>
         <td>
-          <button>Редактировать</button>
+          <button @click="selectEmployee(employee)">Редактировать</button>
           <button>Уволить</button>
         </td>
       </tr>
     </tbody>
     </table>
   </div>
+  <EditWindow 
+  :visible="isEditOpen"
+  :editedEmployee="selectedEmployee"/>
 </template>
 
 <style scoped>
