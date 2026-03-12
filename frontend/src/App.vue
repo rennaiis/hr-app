@@ -49,9 +49,19 @@
     })
     const selectedEmployee = ref<Employee | null>(null)
     const isEditOpen = ref(false)
+    const isAddFormOpen = ref(false)
+    const isTableEmpty = ref(true)
+    function openAddForm(){
+      isAddFormOpen.value = !isAddFormOpen.value
+    }
     async function refresh() {
       try{
         employees.value = await getEmployees(searchParams.value)
+        if (employees.value.length == 0){
+          isTableEmpty.value = false
+        }else{
+          isTableEmpty.value = true
+        }
       }catch(err){
         console.error('Ошибка при загрузке сотрудников', err);
       }
@@ -95,12 +105,11 @@
         </option>
       </select>
       </p>
-      <button type="submit">Найти</button>
       </form>
-      <button>+</button>
+      <button @click="openAddForm">+</button>
 
     </div>
-    <form @submit ="submitAdd">
+    <form @submit ="submitAdd" v-if="isAddFormOpen">
       <h3>Новый сотрудник</h3>
       <p>
         <label for="name">ФИО</label>
@@ -180,7 +189,7 @@
       </p>
       <button type="submit">Добавить</button>
     </form>
-    <table>
+    <table v-if="isTableEmpty">
       <thead>
         <tr>
           <th>ФИО</th>
