@@ -30,6 +30,11 @@
       isEditOpen.value = true
       selectedEmployee.value = emp
     }
+    const searchParams =ref({
+      filterDepartment: '',
+      filterJob: '', 
+      search: ''
+    })
     const newEmployee = ref<Employee>({
       id: 0,
       name: '',
@@ -52,11 +57,33 @@
     <h1>Сотрудники</h1>
     <div>
       <form >
-        <input type="text" id="search">
-        <label for="seatch"><img src="" alt=""></label>
-        <button type="submit">Найти</button>
+        <input type="text" v-model="searchParams.search" id="search">
+        <label for="search"><img src="" alt=""></label>
+        <p>
+        <label for="departmentFilter">Отдел</label>
+        <select 
+          id="departmentFilter"
+          v-model="searchParams.filterDepartment">
+          <option v-for="department in departments" :key="department" :value="department">
+            {{ department }}
+          </option>
+        </select>
+      </p>
+      <p>
+        <label for="jobFilter">Профессия</label>
+        <select 
+          v-model="searchParams.filterJob"
+          id="jobFilter"
+        >
+        <option v-for="job in jobs" :key="job" :value="job">
+          {{ job }}
+        </option>
+      </select>
+      </p>
+      <button type="submit">Найти</button>
       </form>
       <button>+</button>
+
     </div>
     <form @submit ="submitAdd">
       <h3>Новый сотрудник</h3>
