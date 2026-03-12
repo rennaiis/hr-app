@@ -1,37 +1,44 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import departments from './data/departments.json'
-  import jobs from './data/jobs.json'
-  import { type Employee } from "../../types/Employee";
-  import { getEmployees, addEmployee} from './API/eployees';
-  import EditWindow from './EditWindow.vue';
-  const employees = ref<Employee[]>([])
-  onMounted( async()=>{
-    employees.value = await getEmployees()
-  })
-  async function submitAdd() {
-    await addEmployee(newEmployee.value)
-    employees.value = await getEmployees()
-  }
-  function selectEmployee(emp: Employee){
-    isEditOpen.value = true
-    selectedEmployee.value = emp
-  }
-  const newEmployee = ref<Employee>({
-    id: 0,
-    name: '',
-    birthDate: new Date(),
-    passportData: '', 
-    contact: '', 
-    adress:'',
-    job: '', 
-    department: '', 
-    salary: 0, 
-    hireDate: new Date(), 
-    isFired: false
-  })
-  const selectedEmployee = ref<Employee | null>(null)
-  const isEditOpen = ref(false)
+    import { ref, onMounted } from 'vue';
+    import departments from './data/departments.json'
+    import jobs from './data/jobs.json'
+    import { type Employee } from "../../types/Employee";
+    import { getEmployees, addEmployee, updateEmployee} from './API/eployees';
+    import EditWindow from './EditWindow.vue';
+    const employees = ref<Employee[]>([])
+    onMounted( async()=>{
+      employees.value = await getEmployees()
+    })
+    async function editEmployee(emp: Employee | null) {
+      if (emp){
+        await updateEmployee(emp)
+      }
+      employees.value = await getEmployees()
+      isEditOpen.value = false
+    }
+    async function submitAdd() {
+      await addEmployee(newEmployee.value)
+      employees.value = await getEmployees()
+    }
+    function selectEmployee(emp: Employee){
+      isEditOpen.value = true
+      selectedEmployee.value = emp
+    }
+    const newEmployee = ref<Employee>({
+      id: 0,
+      name: '',
+      birthDate: new Date(),
+      passportData: '', 
+      contact: '', 
+      adress:'',
+      job: '', 
+      department: '', 
+      salary: 0, 
+      hireDate: new Date(), 
+      isFired: false
+    })
+    const selectedEmployee = ref<Employee | null>(null)
+    const isEditOpen = ref(false)
 </script>
 
 <template>
@@ -160,8 +167,10 @@
     </table>
   </div>
   <EditWindow 
-  :visible="isEditOpen"
-  :editedEmployee="selectedEmployee"/>
+    :visible="isEditOpen"
+    :editedEmployee="selectedEmployee"
+    @close="isEditOpen = false"
+    @save="editEmployee"/>
 </template>
 
 <style scoped>

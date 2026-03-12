@@ -40,5 +40,16 @@ export async function addEmployee(emp: Employee){
         }, 
         body: JSON.stringify(emp)
     })
-    return await res.json
+    return await res.json()
+}
+
+export async function updateEmployee(emp: Employee) {
+    const res =await fetch(`http://localhost:3000/${emp.id}`,{
+        method: 'PUT',
+        headers:{
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(emp)
+    }) 
+    return await res.json()    
 }

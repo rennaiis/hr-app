@@ -1,19 +1,34 @@
 <script setup lang="ts">
-  import { ref, watch} from 'vue';
-  import departments from './data/departments.json'
-  import jobs from './data/jobs.json' 
-  import { type Employee } from '../../types/Employee';
-  import {type EditWindowProps} from '../../types/Props'
-  const props = defineProps<EditWindowProps>()
-  const copyChosenEmployee = ref<Employee | null>(props.editedEmployee)
-  watch(()=>props.editedEmployee, 
-  (newVal: Employee | null )=>{
-    if (newVal){
-        copyChosenEmployee.value = {...newVal}
-    }else{
-        copyChosenEmployee.value = null
+    import { ref, watch} from 'vue';
+    import departments from './data/departments.json'
+    import jobs from './data/jobs.json' 
+    import { type Employee } from '../../types/Employee';
+    import {type EditWindowProps} from '../../types/Props'
+    const props = defineProps<EditWindowProps>()
+    const emits = defineEmits<{
+        (e: 'close'): void;
+        (e: 'save', data: Employee): void
+    }>()
+    const copyChosenEmployee = ref<Employee | null>(props.editedEmployee)
+    function handleSave(){
+        if (copyChosenEmployee.value){
+            emits('save', copyChosenEmployee.value)
+        }
     }
-  })
+    function handleClose(){
+        if (props.visible){
+            emits('close')
+        }
+    }
+    watch(()=>props.editedEmployee, 
+    (newVal: Employee | null )=>{
+        if (newVal){
+            copyChosenEmployee.value = {...newVal}
+        }else{
+            copyChosenEmployee.value = null
+        }
+    })
+  
 </script>
 <template>
     <div v-if="visible && copyChosenEmployee">
@@ -94,8 +109,8 @@
                     type="date" 
                     id="hire_date">
             </p>
-            <button>Сохранить</button>
-            <button>Отмена</button>
+            <button @click="handleSave">Сохранить</button>
+            <button @click="handleClose">Отмена</button>
         </form>
     </div>
 </template>
