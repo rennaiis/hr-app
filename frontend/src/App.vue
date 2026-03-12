@@ -19,8 +19,13 @@
       emp.isFired = true
       await updateEmployee(emp)
       employees.value = await getEmployees(searchParams.value)
-      isEditOpen.value = false      
     }
+    async function unfireEmployee(emp: Employee) {
+      emp.isFired = false
+      await updateEmployee(emp)
+      employees.value = await getEmployees(searchParams.value)      
+    }
+
     async function submitAdd() {
       await addEmployee(newEmployee.value)
       employees.value = await getEmployees(searchParams.value)
@@ -217,8 +222,9 @@
         <td>{{ employee.salary }}</td>
         <td>{{ employee.birthDate.toISOString().split('T')[0]}}</td>
         <td>
-          <button @click="selectEmployee(employee)">Изменить</button>
-          <button @click="fireEmployee(employee)">Уволить</button>
+          <button v-if="!employee.isFired" @click="selectEmployee(employee)">Изменить</button>
+          <button v-if="!employee.isFired" @click="fireEmployee(employee)">Уволить</button>
+          <button v-if="employee.isFired" @click="unfireEmployee(employee)">Сотрудник уволен. Вернуть?</button>
         </td>
       </tr>
     </tbody>
