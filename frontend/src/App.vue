@@ -96,7 +96,7 @@
     <div class="main">
       <div class="inline">
         <div class='block search-block'>
-          <label for="search"><img class="icon" src="/icon-search.svg" alt="search" viewBox="0 0 24 24"/></label>
+            <label for="search"><img class="icon" src="/icon-search.svg" alt="search" viewBox="0 0 24 24"/></label>
             <input class="search-input" @change="" type="text" v-model="searchParams.search" id="search">
             <p class="select-filter">
               <select class="filter"
@@ -209,7 +209,7 @@
       <table v-if="isTableEmpty">
         <thead>
           <tr>
-            <th>ФИО</th>
+            <th class='first'>ФИО</th>
             <th>Дата рождения</th>
             <th>Паспорт</th>
             <th>Телефон</th>
@@ -223,7 +223,7 @@
         </thead>
       <tbody>
         <tr v-for="employee in employees" :key="employee.id">
-          <td>{{ employee.name }}</td>
+          <td class='first'>{{ employee.name }}</td>
           <td>{{employee.birthDate.toISOString().split('T')[0]}}</td>
           <td>{{ employee.passportData }}</td>
           <td>{{ employee.contact }}</td>
@@ -241,6 +241,10 @@
         </tr>
       </tbody>
       </table>
+    </div>
+    <div class="inline">
+      <button>Редактировать профессии</button>
+      <button>Редактировать отрасли</button>
     </div>
   </div>
   </div>
