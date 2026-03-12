@@ -112,21 +112,21 @@
     
     <form @submit ="submitAdd" v-if="isAddFormOpen" class="block form-block">
       <h3>Новый сотрудник</h3>
-      <p>
+      <p class="input-item">
         <label for="name">ФИО</label>
         <input 
           v-model="newEmployee.name" 
           type="text" 
           id="name">
       </p>
-      <p>
+      <p class="input-item">
         <label for="birth_date">Дата рождения</label>
         <input 
           type="date" 
           id="birth_date"
           v-model="newEmployee.birthDate">
       </p>
-      <p>
+      <p class="input-item">
         <label for="passport_data">Серия и номер паспорта</label>
         <input 
           v-model="newEmployee.passportData"
@@ -136,7 +136,7 @@
           placeholder="0000 000000"
           imputmode="numeric">
       </p>
-      <p>
+      <p class="input-item">
         <label for="contact">Телефон</label>
         <input 
           v-model="newEmployee.contact"
@@ -146,14 +146,14 @@
           placeholder="+7(000)000-00-00"
           imputmode="tel">
       </p>
-      <p>
+      <p class="input-item">
         <label for="adress">Адрес проживания</label>
         <input 
           v-model="newEmployee.adress" 
           type="text" 
           id="adress">
       </p>
-      <p>
+      <p class="input-item">
         <label for="department">Отдел</label>
         <select 
           id="department"
@@ -163,7 +163,7 @@
           </option>
         </select>
       </p>
-      <p>
+      <p class="input-item">
         <label for="job">Профессия</label>
         <select 
           id="job"
@@ -174,14 +174,14 @@
         </option>
       </select>
       </p>
-      <p>
+      <p class="input-item">
         <label for="salary">Зарплата</label>
         <input 
           v-model="newEmployee.salary" 
           type="number" 
           id="salary">
       </p>
-      <p>
+      <p class="input-item">
         <label for="hire_date">Дата приёма на работу</label>
         <input 
           v-model = "newEmployee.hireDate"
@@ -217,7 +217,7 @@
         <td>{{ employee.salary }}</td>
         <td>{{ employee.birthDate.toISOString().split('T')[0]}}</td>
         <td>
-          <button @click="selectEmployee(employee)">Редактировать</button>
+          <button @click="selectEmployee(employee)">Изменить</button>
           <button @click="fireEmployee(employee)">Уволить</button>
         </td>
       </tr>
