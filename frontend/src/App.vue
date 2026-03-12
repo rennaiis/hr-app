@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted} from 'vue';
     import departments from './data/departments.json'
     import jobs from './data/jobs.json'
     import { type Employee } from "../../types/Employee";
