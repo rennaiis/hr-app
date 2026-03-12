@@ -3,34 +3,35 @@
     import departments from './data/departments.json'
     import jobs from './data/jobs.json'
     import { type Employee } from "../../types/Employee";
+    import {type SearchParams} from "../../types/SearchParams"
     import { getEmployees, addEmployee, updateEmployee} from './API/eployees';
     import EditWindow from './EditWindow.vue';
     const employees = ref<Employee[]>([])
     onMounted( async()=>{
-      employees.value = await getEmployees()
+      employees.value = await getEmployees(searchParams.value)
     })
     async function editEmployee(emp: Employee | null) {
       if (emp){
         await updateEmployee(emp)
       }
-      employees.value = await getEmployees()
+      employees.value = await getEmployees(searchParams.value)
       isEditOpen.value = false
     }
     async function fireEmployee(emp: Employee) {
       emp.isFired = true
       await updateEmployee(emp)
-      employees.value = await getEmployees()
+      employees.value = await getEmployees(searchParams.value)
       isEditOpen.value = false      
     }
     async function submitAdd() {
       await addEmployee(newEmployee.value)
-      employees.value = await getEmployees()
+      employees.value = await getEmployees(searchParams.value)
     }
     function selectEmployee(emp: Employee){
       isEditOpen.value = true
       selectedEmployee.value = emp
     }
-    const searchParams =ref({
+    const searchParams =ref<SearchParams>({
       filterDepartment: '',
       filterJob: '', 
       search: ''
@@ -57,7 +58,7 @@
     <h1>Сотрудники</h1>
     <div>
       <form >
-        <input type="text" v-model="searchParams.search" id="search">
+        <input @change="" type="text" v-model="searchParams.search" id="search">
         <label for="search"><img src="" alt=""></label>
         <p>
         <label for="departmentFilter">Отдел</label>

@@ -19,7 +19,7 @@ router.get("/", async(req: Request<{}, {}, {}, productQuery>, res)=>{
         const job = String(req.query.job)
         Employees = Employees.filter(emp => emp.job.toLowerCase() == job)
     }
-    if (req.query.job){
+    if (req.query.department){
         const job = String(req.query.department)
         Employees = Employees.filter(emp => emp.department.toLowerCase() == job)
     }
