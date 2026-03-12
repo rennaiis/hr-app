@@ -1,11 +1,28 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import {db} from './db'
 
 import { Employee } from "../../types/Employee";
 export const router = Router()
-
-router.get("/", async(req, res)=>{
-    const Employees = await db.all(`SELECT * FROM Employees`)
+interface productQuery{
+    search?: string,
+    department?: string,
+    job?: string
+}
+router.get("/", async(req: Request<{}, {}, {}, productQuery>, res)=>{
+    let sql = `SELECT * FROM Employees`
+    let Employees = await db.all(`SELECT * FROM Employees`)
+    if (req.query.search){
+        const search = String(req.query.search)
+        Employees = Employees.filter(emp => emp.name.toLowerCase().includec(search))
+    }
+    if (req.query.job){
+        const job = String(req.query.job)
+        Employees = Employees.filter(emp => emp.job.toLowerCase() == job)
+    }
+    if (req.query.job){
+        const job = String(req.query.department)
+        Employees = Employees.filter(emp => emp.department.toLowerCase() == job)
+    }
     res.json(Employees)
 })
 
@@ -44,3 +61,4 @@ router.delete('/:id', async(req, res)=>{
     await db.run("DELETE FROM Employees WHERE id=?", [id])
     res.json({success: true})
 })
+
