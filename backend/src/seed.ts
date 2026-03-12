@@ -56,14 +56,14 @@ export async function seedDb() {
             VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
             [   emp.id,  
                 emp.name, 
-                String(emp.birthDate ?  new Date(emp.birthDate).toISOString() : null),
+                String(emp.birthDate ?  new Date(emp.birthDate).toISOString().split('T')[0] : null),
                 emp.passportData,
                 emp.contact, 
                 emp.adress, 
                 emp.job, 
                 emp.department, 
                 emp.salary,
-                String(emp.hireDate ?  new Date(emp.hireDate).toISOString() : null),
+                String(emp.hireDate ?  new Date(emp.hireDate).toISOString().split('T')[0] : null),
                 emp.isFired]
         )
       }

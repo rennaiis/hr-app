@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, onMounted} from 'vue';
+    import { ref, onMounted, watch} from 'vue';
     import departments from './data/departments.json'
     import jobs from './data/jobs.json'
     import { type Employee } from "../../types/Employee";
@@ -7,9 +7,7 @@
     import { getEmployees, addEmployee, updateEmployee} from './API/eployees';
     import EditWindow from './EditWindow.vue';
     const employees = ref<Employee[]>([])
-    onMounted( async()=>{
-      employees.value = await getEmployees(searchParams.value)
-    })
+    
     async function editEmployee(emp: Employee | null) {
       if (emp){
         await updateEmployee(emp)
@@ -51,6 +49,22 @@
     })
     const selectedEmployee = ref<Employee | null>(null)
     const isEditOpen = ref(false)
+    async function refresh() {
+      try{
+        employees.value = await getEmployees(searchParams.value)
+      }catch(err){
+        console.error('Ошибка при загрузке сотрудников', err);
+      }
+    }
+    onMounted(
+      refresh
+    )
+    watch(
+      [()=>searchParams.value.search, 
+      ()=>searchParams.value.filterDepartment,
+      ()=>searchParams.value.filterJob], 
+      refresh
+    )
 </script>
 
 <template>
@@ -184,14 +198,14 @@
     <tbody>
       <tr v-for="employee in employees" :key="employee.id">
         <td>{{ employee.name }}</td>
-        <td>{{ employee.birthDate.toDateString()}}</td>
+        <td>{{employee.birthDate.toISOString().split('T')[0]}}</td>
         <td>{{ employee.passportData }}</td>
         <td>{{ employee.contact }}</td>
         <td>{{ employee.adress }}</td>
         <td>{{ employee.department }}</td>
         <td>{{ employee.job }}</td>
         <td>{{ employee.salary }}</td>
-        <td>{{ employee.hireDate.toDateString()}}</td>
+        <td>{{ employee.birthDate.toISOString().split('T')[0]}}</td>
         <td>
           <button @click="selectEmployee(employee)">Редактировать</button>
           <button @click="fireEmployee(employee)">Уволить</button>
