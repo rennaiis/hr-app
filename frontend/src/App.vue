@@ -16,6 +16,12 @@
       employees.value = await getEmployees()
       isEditOpen.value = false
     }
+    async function fireEmployee(emp: Employee) {
+      emp.isFired = true
+      await updateEmployee(emp)
+      employees.value = await getEmployees()
+      isEditOpen.value = false      
+    }
     async function submitAdd() {
       await addEmployee(newEmployee.value)
       employees.value = await getEmployees()
@@ -160,7 +166,7 @@
         <td>{{ employee.hireDate.toDateString()}}</td>
         <td>
           <button @click="selectEmployee(employee)">Редактировать</button>
-          <button>Уволить</button>
+          <button @click="fireEmployee(employee)">Уволить</button>
         </td>
       </tr>
     </tbody>
