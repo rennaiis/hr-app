@@ -80,3 +80,21 @@ export async function deleteEmployee(emp: Employee) {
     })
     return await res.json()
 }
+
+export async function updateJobs(jobsList: string[]) {
+    const res = await fetch('http://localhost:3000/jobs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(jobsList)
+    })
+    return await res.json()   
+}
+
+export async function updateDepartments(departmentsList: string[]) {
+    const res = await fetch('http://localhost:3000/departments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(departmentsList)
+    })
+    return await res.json()   
+} 

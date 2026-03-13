@@ -1,5 +1,7 @@
 import { Router, Request, Response } from "express";
 import {db} from './db'
+const fs = require('fs');
+const path = require('path');
 
 import { Employee } from "../../types/Employee";
 export const router = Router()
@@ -62,3 +64,15 @@ router.delete('/:id', async(req, res)=>{
     res.json({success: true})
 })
 
+router.post('/jobs', (req, res) => {
+    const newJobs = req.body;
+    const filePath = path.join(__dirname, '../../frontend/src/data/jobs.json'); 
+    fs.writeFileSync(filePath, JSON.stringify(newJobs, null, 2), 'utf-8');
+    res.json({success: true});
+}); 
+router.post('/departments', (req, res) => {
+    const newDepartments = req.body;
+    const filePath = path.join(__dirname, '../../frontend/src/data/departments.json'); 
+    fs.writeFileSync(filePath, JSON.stringify(newDepartments, null, 2), 'utf-8');
+    res.json({success: true});
+}); 

@@ -4,7 +4,7 @@
     import jobs from './data/jobs.json'
     import { type Employee } from "../../types/Employee";
     import {type SearchParams} from "../../types/SearchParams"
-    import { getEmployees, addEmployee, updateEmployee, deleteEmployee} from './API/eployees';
+    import { getEmployees, addEmployee, updateEmployee, deleteEmployee, updateJobs, updateDepartments} from './API/eployees';
     import EditWindow from './EditWindow.vue';
     const employees = ref<Employee[]>([])
     
@@ -21,6 +21,7 @@
       }
       refresh()
     }
+  
     async function fireEmployee(emp: Employee) {
       emp.isFired = true
       await updateEmployee(emp)
@@ -62,6 +63,41 @@
     const isEditOpen = ref(false)
     const isAddFormOpen = ref(false)
     const isTableEmpty = ref(true)
+
+    const jobsList = ref<string[]>([...jobs])
+    const isJobsEditOpen = ref(false) 
+    const newJobName = ref('') 
+    
+    const departmentsList = ref<string[]>([...departments])
+    const isDepartmentsEditOpen = ref(false) 
+    const newDepartmentName = ref('')
+
+    function addJob() {
+      if (newJobName.value) {
+        jobsList.value.push(newJobName.value)
+        newJobName.value = ''
+      }
+    }
+    function addDepartment() {
+      if (newDepartmentName.value) {
+        departmentsList.value.push(newDepartmentName.value)
+        newDepartmentName.value = ''
+      }
+    }
+    function deleteJob(index: number) {
+      jobsList.value.splice(index, 1)
+    }
+    function deleteDepartment(index: number) {
+      departmentsList.value.splice(index, 1)
+    }
+    async function saveJobs() {
+      await updateJobs(jobsList.value)
+      isJobsEditOpen.value = false
+      }
+    async function saveDepartments() {
+      await updateDepartments(departmentsList.value)
+      isDepartmentsEditOpen.value = false
+    }
     function openAddForm(){
       isAddFormOpen.value = !isAddFormOpen.value
     }
@@ -102,7 +138,7 @@
               <select class="filter"
                 v-model="searchParams.filterDepartment">
                 <option value="">Все отделы</option>
-                <option v-for="department in departments" :key="department" :value="department">
+                <option v-for="department in departmentsList" :key="department" :value="department">
                   {{ department }}
                 </option>
               </select>
@@ -111,7 +147,7 @@
               <select class="filter"
                 v-model="searchParams.filterJob">
                 <option value="">Все профессии</option>
-                <option v-for="job in jobs" :key="job" :value="job">
+                <option v-for="job in jobsList" :key="job" :value="job">
                   {{ job }}
                 </option>
               </select>
@@ -169,7 +205,7 @@
           <select 
             id="department"
             v-model="newEmployee.department">
-            <option v-for="department in departments" :key="department" :value="department">
+            <option v-for="department in departmentsList" :key="department" :value="department">
               {{ department }}
             </option>
           </select>
@@ -180,7 +216,7 @@
             id="job"
             v-model="newEmployee.job"
           >
-          <option v-for="job in jobs" :key="job" :value="job">
+          <option v-for="job in jobsList" :key="job" :value="job">
             {{ job }}
           </option>
         </select>
@@ -243,9 +279,10 @@
       </table>
     </div>
     <div class="inline">
-      <button>Редактировать профессии</button>
-      <button>Редактировать отрасли</button>
+      <button @click="isJobsEditOpen = true">Редактировать профессии</button>
+      <button @click="isDepartmentsEditOpen = true">Редактировать отрасли</button>
     </div>
+    
   </div>
   </div>
   <EditWindow 
@@ -253,6 +290,42 @@
     :editedEmployee="selectedEmployee"
     @close="isEditOpen = false"
     @save="editEmployee"/>
+
+  <div class="overlay" v-if="isJobsEditOpen">
+    <div class="block form-block">
+      <h3>Список профессий</h3>
+      <div v-for="(job, index) in jobsList" :key="index" class="inline">
+        <input v-model="jobsList[index]" type="text" />
+        <button @click="deleteJob(index)">x</button>
+      </div>
+      <div class="inline">
+        <input v-model="newJobName" placeholder="Добавить"/>
+        <button @click="addJob">+</button>
+      </div>
+      <div class="inline" style="margin-top: 20px;">
+        <button @click="saveJobs">Сохранить</button>
+        <button @click="isJobsEditOpen = false">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" v-if="isDepartmentsEditOpen">
+    <div class="block form-block">
+      <h3>Список отделов</h3>
+      <div v-for="(department, index) in departmentsList" :key="index" class="inline">
+        <input  v-model="departmentsList[index]" type="text" />
+        <button @click="deleteDepartment(index)">x</button>
+      </div>
+      <div class="inline">
+        <input v-model="newDepartmentName" placeholder="Добавить"/>
+        <button @click="addDepartment">+</button>
+      </div>
+      <div class="inline" style="margin-top: 20px;">
+        <button @click="saveDepartments">Сохранить</button>
+        <button @click="isDepartmentsEditOpen = false">Закрыть</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
